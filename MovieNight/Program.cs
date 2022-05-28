@@ -30,6 +30,7 @@ builder.Services.Configure<ForwardedHeadersOptions>(options =>
         ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
 });
 
+builder.Host.UseSystemd();
 
 var app = builder.Build();
 
