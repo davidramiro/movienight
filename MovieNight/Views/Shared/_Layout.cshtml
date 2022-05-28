@@ -1,4 +1,6 @@
-﻿@inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment hostingEnv
+﻿@using System.Reflection
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment hostingEnv
 
 <!DOCTYPE html>
 <html lang="en">
@@ -48,7 +50,9 @@
 
     <footer class="border-top footer text-muted bottom-0">
         <div class="container">
-            &copy; 2022 - David Ramiro | @hostingEnv.EnvironmentName
+            &copy; 2022 - David Ramiro | <a href="https://github.com/davidramiro/movienight/" target="_blank">GitHub</a> | 
+            License: MIT | Version: @Assembly.GetExecutingAssembly()?.GetName()?.Version?.ToString(3) 
+            | @hostingEnv.EnvironmentName
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
