@@ -1,0 +1,49 @@
+@using System.Globalization
+@model MovieNight.Models.ViewModels.SuggestionVoteVM
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Suggestions for @CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName((DateTime.Today.Month + 1))</h1>
+<h3 class="mb-5 mt-2">You have cast @Model.castVotes of 3 votes.</h3>
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @ViewBag.Error
+    </div>
+}
+
+<div class="row">
+  
+  @foreach (var item in Model.suggestionvote)
+  {
+      <div class="col-lg-3 col-md-6 col-sm-12 d-flex align-items-stretch mt-1 mb-5">
+          <div class="card">
+              <img class="card-img-top h-75" src="@Url.Content(item.Key.Movie?.PosterUrl)" 
+                   alt="@item.Key.Movie.Title Poster">
+              <div class="card-body">
+                  <h5 class="card-title">@item.Key.Movie.Title</h5>
+                  <h6>Suggested by: @item.Key.User?.firstName</h6>
+                  <p class="card-text">@item.Key.Movie.Plot</p>
+              </div>
+              <ul class="list-group list-group-flush">
+                  <li class="list-group-item">Runtime: @item.Key.Movie.Runtime</li>
+                  <li class="list-group-item">Genre: @item.Key.Movie.Genre</li>
+                  <li class="list-group-item">Released: @item.Key.Movie.ReleaseYear</li>
+                  <li class="list-group-item">IMDb: @item.Key.Movie.ImdbRating/10 | MetaCritic: @item.Key.Movie.MetaScore/100</li>
+              </ul>
+              <div class="card-body">
+                  <a href="https://imdb.com/title/@item.Key.Movie.ImdbId/" class="card-link">Show on IMDb</a>
+                  <p>Votes: @item.Value.Count @if (item.Value.Count > 0)
+                                              {
+                                                  @Html.Label("(") @String.Join(", ", item.Value.Select(x => x.User.firstName)) @Html.Label(")") 
+                                              }</p>
+                  <a class="btn btn-primary" asp-controller="Voting" asp-action="Vote" asp-route-itemid="@item.Key.Id">
+                      Vote
+                  </a>
+              </div>
+          </div>
+        </div>
+  }
+</div>

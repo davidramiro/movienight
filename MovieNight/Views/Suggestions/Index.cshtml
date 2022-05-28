@@ -1,0 +1,40 @@
+@using Microsoft.EntityFrameworkCore.Metadata.Internal
+@model MovieNight.Models.ImdbInput
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Suggestion</h4>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Index">
+            <h4>Please submit an IMDb link or the IMDb ID (formatted as "tt12345678") to make a suggestion.</h4>
+            
+            <h5>You have submitted @ViewBag.SuggestionsMade of 3 movies.</h5>
+            @if (ViewBag.Error != null)
+            {
+                <div class="alert alert-danger" role="alert">
+                    @ViewBag.Error
+                </div>
+            }
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="input-group mt-4">
+                <input asp-for="ImdbId" type="text" class="form-control" placeholder="IMDb Reference" aria-label="IMDb Reference" aria-describedby="basic-addon2">
+                <span asp-validation-for="ImdbId" class="text-danger"></span>
+                <div class="input-group-append">
+                    <input type="submit" value="Suggest" class="btn btn-primary"/>
+                </div>
+            </div>
+            
+            
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

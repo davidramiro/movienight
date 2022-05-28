@@ -1,0 +1,34 @@
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+/*html {*/
+/*  position: relative;*/
+/*  min-height: 100%;*/
+/*}*/
+
+/*body {*/
+/*  margin-bottom: 60px;*/
+/*}*/
+
+html {
+    height: 100%;
+}
+
+body {
+    min-height: 100%;
+
+    display: flex;
+    flex-direction: column;
+}
+
+footer {
+    padding: 1em;
+    margin-top: auto;
+}
