@@ -37,17 +37,44 @@ public class OmdbService
         }
 
         Movie fetchedMovie = new Movie();
-
-        fetchedMovie.Title = movieJson.SelectToken("Title").Value<string>();
-        fetchedMovie.ReleaseYear = movieJson.SelectToken("Year").Value<int>();
-        fetchedMovie.Genre = movieJson.SelectToken("Genre").Value<string>();
-        fetchedMovie.ImdbRating = movieJson.SelectToken("imdbRating").Value<float>();
-        fetchedMovie.MetaScore = movieJson.SelectToken("Metascore").Value<int>();
-        fetchedMovie.PosterUrl = movieJson.SelectToken("Poster").Value<string>();
-        fetchedMovie.Plot = movieJson.SelectToken("Plot").Value<string>();
-        fetchedMovie.ImdbId = movieJson.SelectToken("imdbID").Value<string>();
-        fetchedMovie.Runtime = movieJson.SelectToken("Runtime").Value<string>();
-
+        
+        if (!movieJson.SelectToken("Title").Value<string>().Equals("N/A"))
+        {
+            fetchedMovie.Title = movieJson.SelectToken("Title").Value<string>();
+        }
+        if (!movieJson.SelectToken("Year").Value<string>().Equals("N/A"))
+        {
+            fetchedMovie.ReleaseYear = movieJson.SelectToken("Year").Value<int>();
+        }
+        if (!movieJson.SelectToken("Genre").Value<string>().Equals("N/A"))
+        {
+            fetchedMovie.Genre = movieJson.SelectToken("Genre").Value<string>();
+        }
+        if (!movieJson.SelectToken("imdbRating").Value<string>().Equals("N/A"))
+        {
+            fetchedMovie.ImdbRating = movieJson.SelectToken("imdbRating").Value<float>();
+        }
+        if (!movieJson.SelectToken("Metascore").Value<string>().Equals("N/A"))
+        {
+            fetchedMovie.MetaScore = movieJson.SelectToken("Metascore").Value<int>();
+        }
+        if (!movieJson.SelectToken("Poster").Value<string>().Equals("N/A"))
+        {
+            fetchedMovie.PosterUrl = movieJson.SelectToken("Poster").Value<string>();
+        }
+        if (!movieJson.SelectToken("Plot").Value<string>().Equals("N/A"))
+        {
+            fetchedMovie.Plot = movieJson.SelectToken("Plot").Value<string>();
+        }
+        if (!movieJson.SelectToken("imdbID").Value<string>().Equals("N/A"))
+        {
+            fetchedMovie.ImdbId = movieJson.SelectToken("imdbID").Value<string>();
+        }
+        if (!movieJson.SelectToken("Runtime").Value<string>().Equals("N/A"))
+        {
+            fetchedMovie.Runtime = movieJson.SelectToken("Runtime").Value<string>();
+        }
+        
         return fetchedMovie;
     }
     
