@@ -20,66 +20,64 @@
         <p>Please log in to participate.</p>
     }
     
+    @if (!Model.LastEmpty)
+    {
+        <div class="row mt-4">
+            <h3>@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName((DateTime.Today.Month))'s Winner</h3>
+            <div class="movie_card text-start" id="bright">
+                <div class="info_section">
+                    <div class="movie_header">
+                        <img class="locandina" src="@Url.Content(@Model.LastSuggestion.Movie.PosterUrl)" alt="@Model.LastSuggestion.Movie.Title Poster"/>
+                        <h1>@Model.LastSuggestion.Movie.Title</h1>
+                        <h4>@Model.LastSuggestion.Movie.ReleaseYear</h4>
+                        <span class="minutes">@Model.LastSuggestion.Movie.Runtime</span>
+                        <p class="type">@Model.LastSuggestion.Movie.Genre</p>
+                    </div>
+                    <div class="movie_desc">
+                        <p class="text">
+                            @Model.LastSuggestion.Movie.Plot
+                        </p>
+                        <p><em>Suggested by: @Model.LastSuggestion.User?.firstName</em></p>
+                    </div>
+                    <div class="movie_social">
+                        <ul>
+                            <li>IMDb: @Model.LastSuggestion.Movie.ImdbRating/10 | MetaCritic: @Model.LastSuggestion.Movie.MetaScore/100</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="blur_back bright_back" style="background: url('@Url.Content(@Model.LastSuggestion.Movie.PosterUrl)')"></div>
+            </div>
+        </div>
+    }
 
-    
-        @if (!Model.LastEmpty)
-        {
-            <div class="row mt-4">
-                <h3>@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName((DateTime.Today.Month))'s Winner</h3>
-                <div class="movie_card text-start" id="bright">
-                    <div class="info_section">
-                        <div class="movie_header">
-                            <img class="locandina" src="@Url.Content(@Model.LastSuggestion.Movie.PosterUrl)" alt="@Model.LastSuggestion.Movie.Title Poster"/>
-                            <h1>@Model.LastSuggestion.Movie.Title</h1>
-                            <h4>@Model.LastSuggestion.Movie.ReleaseYear</h4>
-                            <span class="minutes">@Model.LastSuggestion.Movie.Runtime</span>
-                            <p class="type">@Model.LastSuggestion.Movie.Genre</p>
-                        </div>
-                        <div class="movie_desc">
-                            <p class="text">
-                                @Model.LastSuggestion.Movie.Plot
-                            </p>
-                            <p><em>Suggested by: @Model.LastSuggestion.User?.firstName</em></p>
-                        </div>
-                        <div class="movie_social">
-                            <ul>
-                                <li>IMDb: @Model.LastSuggestion.Movie.ImdbRating/10 | MetaCritic: @Model.LastSuggestion.Movie.MetaScore/100</li>
-                            </ul>
-                        </div>
+    @if (!Model.CurrentEmpty)
+    {
+        <div class="row mt-4">
+            <h3>@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName((DateTime.Today.Month + 1))'s Front Runner</h3>
+            <div class="movie_card text-start" id="bright">
+                <div class="info_section">
+                    <div class="movie_header">
+                        <img class="locandina" src="@Url.Content(@Model.CurrentSuggestion.Movie.PosterUrl)" alt="@Model.CurrentSuggestion.Movie.Title Poster"/>
+                        <h1>@Model.CurrentSuggestion.Movie.Title</h1>
+                        <h4>@Model.CurrentSuggestion.Movie.ReleaseYear</h4>
+                        <span class="minutes">@Model.CurrentSuggestion.Movie.Runtime</span>
+                        <p class="type">@Model.CurrentSuggestion.Movie.Genre</p>
                     </div>
-                    <div class="blur_back bright_back" style="background: url('@Url.Content(@Model.LastSuggestion.Movie.PosterUrl)')"></div>
-                </div>
-            </div>
-        }
-    
-        @if (!Model.CurrentEmpty)
-        {
-            <div class="row">
-                <h3>@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName((DateTime.Today.Month + 1))'s Front Runner</h3>
-                <div class="movie_card text-start" id="bright">
-                    <div class="info_section">
-                        <div class="movie_header">
-                            <img class="locandina" src="@Url.Content(@Model.CurrentSuggestion.Movie.PosterUrl)" alt="@Model.LastSuggestion.Movie.Title Poster"/>
-                            <h1>@Model.CurrentSuggestion.Movie.Title</h1>
-                            <h4>@Model.CurrentSuggestion.Movie.ReleaseYear</h4>
-                            <span class="minutes">@Model.CurrentSuggestion.Movie.Runtime</span>
-                            <p class="type">@Model.CurrentSuggestion.Movie.Genre</p>
-                        </div>
-                        <div class="movie_desc">
-                            <p class="text">
-                                @Model.CurrentSuggestion.Movie.Plot
-                            </p>
-                            <p><em>Suggested by: @Model.CurrentSuggestion.User?.firstName</em></p>
-                        </div>
-                        <div class="movie_social">
-                            <ul>
-                                <li>IMDb: @Model.CurrentSuggestion.Movie.ImdbRating/10 | MetaCritic: @Model.CurrentSuggestion.Movie.MetaScore/100</li>
-                            </ul>
-                        </div>
+                    <div class="movie_desc">
+                        <p class="text">
+                            @Model.CurrentSuggestion.Movie.Plot
+                        </p>
+                        <p><em>Suggested by: @Model.CurrentSuggestion.User?.firstName</em></p>
                     </div>
-                    <div class="blur_back bright_back" style="background: url('@Url.Content(@Model.CurrentSuggestion.Movie.PosterUrl)')"></div>
+                    <div class="movie_social">
+                        <ul>
+                            <li>IMDb: @Model.CurrentSuggestion.Movie.ImdbRating/10 | MetaCritic: @Model.CurrentSuggestion.Movie.MetaScore/100</li>
+                        </ul>
+                    </div>
                 </div>
+                <div class="blur_back bright_back" style="background: url('@Url.Content(@Model.CurrentSuggestion.Movie.PosterUrl)')"></div>
             </div>
-        }
-    </div>
+        </div>
+    }
+</div>
 
