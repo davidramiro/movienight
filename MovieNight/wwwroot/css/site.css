@@ -92,6 +92,7 @@ footer {
 }
 .movie_card .info_section .movie_desc .text {
     color: #cfd6e1;
+    font-size: 14px;
 }
 .movie_card .info_section .movie_social {
     height: 10%;

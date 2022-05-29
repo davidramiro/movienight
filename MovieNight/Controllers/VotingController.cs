@@ -57,7 +57,7 @@ namespace MovieNight.Controllers
         [Authorize]
         public async Task<IActionResult> Vote(int? itemId)
         {
-            Suggestion sugg = _context.Suggestion.First(s => s.Id == itemId);
+            Suggestion sugg = _context.Suggestion.Include(s => s.User).First(s => s.Id == itemId);
             Vote vote = new Vote
             {
                 Date = DateTime.Today

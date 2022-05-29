@@ -28,7 +28,7 @@
                 <div class="info_section">
                     <div class="movie_header">
                         <img class="locandina" src="@Url.Content(@Model.LastSuggestion.Movie.PosterUrl)" alt="@Model.LastSuggestion.Movie.Title Poster"/>
-                        <h1>@Model.LastSuggestion.Movie.Title</h1>
+                        <h3>@Model.LastSuggestion.Movie.Title</h3>
                         <h4>@Model.LastSuggestion.Movie.ReleaseYear</h4>
                         <span class="minutes">@Model.LastSuggestion.Movie.Runtime</span>
                         <p class="type">@Model.LastSuggestion.Movie.Genre</p>
@@ -45,7 +45,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="blur_back bright_back" style="background: url('@Url.Content(@Model.LastSuggestion.Movie.PosterUrl)')"></div>
+                <div class="blur_back bright_back" style="background: url('@Url.Content(@Model.LastSuggestion.Movie.PosterUrl)');background-size: 100%;background-position: center !important;"></div>
             </div>
         </div>
     }
@@ -58,7 +58,7 @@
                 <div class="info_section">
                     <div class="movie_header">
                         <img class="locandina" src="@Url.Content(@Model.CurrentSuggestion.Movie.PosterUrl)" alt="@Model.CurrentSuggestion.Movie.Title Poster"/>
-                        <h1>@Model.CurrentSuggestion.Movie.Title</h1>
+                        <h3>@Model.CurrentSuggestion.Movie.Title</h3>
                         <h4>@Model.CurrentSuggestion.Movie.ReleaseYear</h4>
                         <span class="minutes">@Model.CurrentSuggestion.Movie.Runtime</span>
                         <p class="type">@Model.CurrentSuggestion.Movie.Genre</p>
@@ -75,7 +75,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="blur_back bright_back" style="background: url('@Url.Content(@Model.CurrentSuggestion.Movie.PosterUrl)')"></div>
+                <div class="blur_back bright_back" style="background: url('@Url.Content(@Model.CurrentSuggestion.Movie.PosterUrl)');background-size: 100%;background-position: center !important;"></div>
             </div>
         </div>
     }
