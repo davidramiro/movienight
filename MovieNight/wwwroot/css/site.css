@@ -39,6 +39,14 @@ footer {
     color: #fff;
 }
 
+.card-text, .list-group {
+    font-size: 14px;
+}
+
+.list-group-item {
+    padding: 0.2rem 1rem;
+}
+
 .movie_card {
     position: relative;
     padding-left: 0;
