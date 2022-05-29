@@ -28,8 +28,7 @@ namespace MovieNight.Controllers
             {
                 ViewBag.Error = TempData["Error"].ToString();
             }
-            
-            
+
             SuggestionVoteVM vm = new SuggestionVoteVM
             {
                 suggestionvote = new Dictionary<Suggestion, List<Vote>>()

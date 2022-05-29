@@ -20,8 +20,8 @@
   {
       <div class="col-lg-3 col-md-6 col-sm-12 d-flex align-items-stretch mt-1 mb-5">
           <div class="card">
-              <img class="card-img-top h-75" src="@Url.Content(item.Key.Movie?.PosterUrl)" 
-                   alt="@item.Key.Movie.Title Poster">
+              <img class="card-img-top lead-image" src="@Url.Content(item.Key.Movie?.PosterUrl)" 
+                   alt="@item.Key.Movie.Title Poster" />
               <div class="card-body">
                   <h5 class="card-title">@item.Key.Movie.Title</h5>
                   <h6>Suggested by: @item.Key.User?.firstName</h6>
@@ -44,6 +44,6 @@
                   </a>
               </div>
           </div>
-        </div>
+      </div>
   }
 </div>
