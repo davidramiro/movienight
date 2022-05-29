@@ -33,9 +33,15 @@ footer {
     object-fit: cover;
 }
 
+.voteborder {
+    display: inline-block;
+    margin-top: 10px;
+    color: #fff;
+}
 
 .movie_card {
     position: relative;
+    padding-left: 0;
     display: block;
     width: 800px;
     height: 350px;
@@ -74,6 +80,13 @@ footer {
     border-radius: 5px;
     border: 1px solid rgba(255, 255, 255, 0.13);
 }
+
+.movie_card .info_section .movie_header .rating {
+    color: #fff;
+    padding: 2px;
+    margin-left: 1em;
+}
+
 .movie_card .info_section .movie_header .type {
     display: inline-block;
     color: #cee4fd;

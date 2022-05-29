@@ -29,7 +29,14 @@
                     <div class="movie_header">
                         <img class="locandina" src="@Url.Content(@Model.LastSuggestion.Movie.PosterUrl)" alt="@Model.LastSuggestion.Movie.Title Poster"/>
                         <h3>@Model.LastSuggestion.Movie.Title</h3>
-                        <h4>@Model.LastSuggestion.Movie.ReleaseYear</h4>
+                        <h4>@Model.CurrentSuggestion.Movie.ReleaseYear
+                            <span class="rating">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-heart" viewBox="0 0 16 16">
+                                  <path d="M9 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-9 8c0 1 1 1 1 1h10s1 0 1-1-1-4-6-4-6 3-6 4Zm13.5-8.09c1.387-1.425 4.855 1.07 0 4.277-4.854-3.207-1.387-5.702 0-4.276Z"/>
+                                </svg>
+                                @Model.LastVotes
+                            </span>
+                        </h4>
                         <span class="minutes">@Model.LastSuggestion.Movie.Runtime</span>
                         <p class="type">@Model.LastSuggestion.Movie.Genre</p>
                     </div>
@@ -59,7 +66,14 @@
                     <div class="movie_header">
                         <img class="locandina" src="@Url.Content(@Model.CurrentSuggestion.Movie.PosterUrl)" alt="@Model.CurrentSuggestion.Movie.Title Poster"/>
                         <h3>@Model.CurrentSuggestion.Movie.Title</h3>
-                        <h4>@Model.CurrentSuggestion.Movie.ReleaseYear</h4>
+                        <h4>@Model.CurrentSuggestion.Movie.ReleaseYear
+                            <span class="rating">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-heart" viewBox="0 0 16 16">
+                                  <path d="M9 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-9 8c0 1 1 1 1 1h10s1 0 1-1-1-4-6-4-6 3-6 4Zm13.5-8.09c1.387-1.425 4.855 1.07 0 4.277-4.854-3.207-1.387-5.702 0-4.276Z"/>
+                                </svg>
+                                @Model.CurrentVotes
+                            </span>
+                            </h4>
                         <span class="minutes">@Model.CurrentSuggestion.Movie.Runtime</span>
                         <p class="type">@Model.CurrentSuggestion.Movie.Genre</p>
                     </div>
