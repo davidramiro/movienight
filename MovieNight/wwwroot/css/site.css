@@ -61,7 +61,7 @@ footer {
 
 .movie_card .info_section {
     position: relative;
-    width: 110%;
+    width: 103%;
     height: 100%;
     background-blend-mode: multiply;
     z-index: 2;
@@ -100,13 +100,6 @@ footer {
     color: #cee4fd;
     margin-left: 10px;
 }
-.movie_card .info_section .movie_header .locandina {
-    position: relative;
-    float: left;
-    margin-right: 20px;
-    height: 120px;
-    box-shadow: 0 0 20px -10px rgba(0, 0, 0, 0.5);
-}
 .movie_card .info_section .movie_desc {
     padding: 25px;
     height: 50%;
@@ -142,7 +135,6 @@ footer {
     z-index: 1;
     height: 100%;
     right: 0;
-    background-size: cover;
     border-radius: 11px;
 }
 
@@ -160,8 +152,10 @@ footer {
     }
 
     .blur_back {
-        width: 80%;
-        background-position: -100% 10% !important;
+        width: 100%;
+        background-repeat: no-repeat !important;
+        background-position: right !important;
+        background-size: 40% !important;
     }
 }
 @media screen and (max-width: 768px) {
@@ -175,6 +169,7 @@ footer {
     .blur_back {
         width: 100%;
         background-position: 50% 50% !important;
+        background-size: 100% !important;
     }
 
     .movie_header {
