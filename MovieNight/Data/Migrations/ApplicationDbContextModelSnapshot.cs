@@ -151,7 +151,7 @@ namespace MovieNight.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("MovieNight.Data.ApplicationUser", b =>
+            modelBuilder.Entity("MovieNight.Data.MovieUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("varchar(255)");
@@ -169,6 +169,11 @@ namespace MovieNight.Data.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("firstName")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar(250)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("tinyint(1)");
@@ -202,11 +207,6 @@ namespace MovieNight.Data.Migrations
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("varchar(256)");
-
-                    b.Property<string>("firstName")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("varchar(250)");
 
                     b.HasKey("Id");
 
@@ -317,7 +317,7 @@ namespace MovieNight.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("MovieNight.Data.ApplicationUser", null)
+                    b.HasOne("MovieNight.Data.MovieUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -326,7 +326,7 @@ namespace MovieNight.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("MovieNight.Data.ApplicationUser", null)
+                    b.HasOne("MovieNight.Data.MovieUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -341,7 +341,7 @@ namespace MovieNight.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MovieNight.Data.ApplicationUser", null)
+                    b.HasOne("MovieNight.Data.MovieUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -350,7 +350,7 @@ namespace MovieNight.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("MovieNight.Data.ApplicationUser", null)
+                    b.HasOne("MovieNight.Data.MovieUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -363,7 +363,7 @@ namespace MovieNight.Data.Migrations
                         .WithMany()
                         .HasForeignKey("MovieId");
 
-                    b.HasOne("MovieNight.Data.ApplicationUser", "User")
+                    b.HasOne("MovieNight.Data.MovieUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
 
@@ -378,7 +378,7 @@ namespace MovieNight.Data.Migrations
                         .WithMany()
                         .HasForeignKey("SuggestionId");
 
-                    b.HasOne("MovieNight.Data.ApplicationUser", "User")
+                    b.HasOne("MovieNight.Data.MovieUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
 

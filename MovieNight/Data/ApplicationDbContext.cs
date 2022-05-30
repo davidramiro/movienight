@@ -4,19 +4,19 @@ using MovieNight.Models;
 
 namespace MovieNight.Data;
 
-public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+public class ApplicationDbContext : IdentityDbContext<MovieUser>
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
     {
     }
     
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    protected override void OnModelCreating(ModelBuilder builder)
     {
  
-        base.OnModelCreating(modelBuilder);
+        base.OnModelCreating(builder);
  
-        modelBuilder.Entity<ApplicationUser>()
+        builder.Entity<MovieUser>()
             .Property(e => e.firstName)
             .HasMaxLength(250);
     }

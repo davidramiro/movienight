@@ -12,9 +12,9 @@ namespace MovieNight.Controllers
     public class VotingController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly UserManager<ApplicationUser> _user;
+        private readonly UserManager<MovieUser> _user;
 
-        public VotingController(ApplicationDbContext context, UserManager<ApplicationUser> user)
+        public VotingController(ApplicationDbContext context, UserManager<MovieUser> user)
         {
             _context = context;
             _user = user;
@@ -31,11 +31,11 @@ namespace MovieNight.Controllers
 
             SuggestionVoteVM vm = new SuggestionVoteVM
             {
-                suggestionvote = new Dictionary<Suggestion, List<Vote>>()
+                SuggestionWithVotes = new Dictionary<Suggestion, List<Vote>>()
             };
 
             var user = await _user.GetUserAsync(HttpContext.User);
-            vm.castVotes = await _context.Vote.CountAsync(v => (v.User.Id == user.Id) && (v.Date.Month == DateTime.Today.Month));
+            vm.CastVotes = await _context.Vote.CountAsync(v => (v.User.Id == user.Id) && (v.Date.Month == DateTime.Today.Month));
 
             var suggList = await _context.Suggestion
                 .Where(s => s.Date.Month == DateTime.Today.Month)
@@ -47,7 +47,7 @@ namespace MovieNight.Controllers
             {
                 List<Vote> votes = await _context.Vote?.Where(v => v.Suggestion.Id == sug.Id).ToListAsync();
                 
-                vm.suggestionvote.Add(sug, votes);
+                vm.SuggestionWithVotes.Add(sug, votes);
             }
             return View(vm);
         }

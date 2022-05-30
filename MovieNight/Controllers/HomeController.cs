@@ -25,42 +25,33 @@ public class HomeController : Controller
     {
 
         MovieOverviewVM vm = new MovieOverviewVM();
+
         try
         {
-            var current = ReturnMostVotedSuggestion(0).Result;
-            vm.CurrentSuggestion = current.sugg;
-            vm.CurrentVotes = current.count;
+            vm.CurrentMovies = ReturnMostVotedSuggestions(0).Result;
             vm.CurrentEmpty = false;
         }
         catch (Exception k)
         {
             _logger.LogInformation("No movies for current month");
-            return View(vm);
         }
-        
-        
         
         try
         {
-            var last = ReturnMostVotedSuggestion(-1).Result;
-            vm.LastSuggestion = last.sugg;
-            vm.LastVotes = last.count;
+            vm.LastMovies = ReturnMostVotedSuggestions(-1).Result;
             vm.LastEmpty = false;
         }
         catch (Exception k)
         {
             _logger.LogInformation("No movies for last month");
-            return View(vm);
         }
-        
-        
 
         return View(vm);
     }
 
-    private async Task<(Suggestion sugg, int count)> ReturnMostVotedSuggestion(int monthOffset)
+    private async Task<Dictionary<Suggestion, List<Vote>>> ReturnMostVotedSuggestions(int monthOffset)
     {
-        Dictionary<Suggestion, int> suggestionDict = new Dictionary<Suggestion, int>();
+        Dictionary<Suggestion, List<Vote>> suggestionDict = new Dictionary<Suggestion, List<Vote>>();
         
         var suggList = await _context.Suggestion
             .Where(s => s.Date.Month == DateTime.Today.Month + monthOffset)
@@ -72,21 +63,32 @@ public class HomeController : Controller
         {
             throw new KeyNotFoundException("No movies found for that month.");
         }
-            
+
+        int maxVotes = -1;
+        
         foreach (Suggestion sug in suggList)
         {
             List<Vote> votes = await _context.Vote?
-                .Where(v => v.Suggestion.Id == sug.Id && v.Date.Month + monthOffset == DateTime.Today.Month + monthOffset)
+                .Where(v => v.Suggestion.Id == sug.Id && v.Date.Month == DateTime.Today.Month + monthOffset)
                 .ToListAsync();
-                
-            suggestionDict.Add(sug, votes.Count);
+
+            if (votes.Count > maxVotes)
+            {
+                maxVotes = votes.Count;
+            }
+            suggestionDict.Add(sug, votes);
         }
         
-        int highestVoteCount = suggestionDict.Values.Max();
-        Suggestion mostVotedSuggestion = suggestionDict
-            .Aggregate((x, y) => x.Value > y.Value ? x : y).Key;
+        foreach(KeyValuePair<Suggestion, List<Vote>> entry in suggestionDict)
+        {
+            if (entry.Value.Count < maxVotes)
+            {
+                suggestionDict.Remove(entry.Key);
+            }
+        }
 
-        return (mostVotedSuggestion, highestVoteCount);
+        return suggestionDict;
+
     }
     
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

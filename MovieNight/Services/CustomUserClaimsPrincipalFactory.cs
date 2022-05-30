@@ -6,17 +6,17 @@ using MovieNight.Data;
 namespace MovieNight.Services;
 
 public class AdditionalUserClaimsPrincipalFactory 
-    : UserClaimsPrincipalFactory<ApplicationUser, IdentityRole>
+    : UserClaimsPrincipalFactory<MovieUser, IdentityRole>
 {
     public AdditionalUserClaimsPrincipalFactory( 
-        UserManager<ApplicationUser> userManager,
+        UserManager<MovieUser> userManager,
         RoleManager<IdentityRole> roleManager, 
         IOptions<IdentityOptions> optionsAccessor) 
         : base(userManager, roleManager, optionsAccessor)
     {}
     
     
-    public override async Task<ClaimsPrincipal> CreateAsync(ApplicationUser user)
+    public override async Task<ClaimsPrincipal> CreateAsync(MovieUser user)
     {
         var principal = await base.CreateAsync(user);
         var identity = (ClaimsIdentity)principal.Identity;

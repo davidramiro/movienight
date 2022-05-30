@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
@@ -5,7 +6,7 @@ using MovieNight.Models;
 using NUnit.Framework;
 using MovieNight.Services;
 
-namespace Tests;
+namespace MoveNightTests;
 
 public class ImdbParserTests
 {
@@ -13,12 +14,8 @@ public class ImdbParserTests
 
     public ImdbParserTests()
     {
-        _omdb = new OmdbService("YOUR-API-KEY");
-    }
-    
-    [SetUp]
-    public void Setup()
-    {
+        var config = new ConfigurationBuilder().AddJsonFile("appsettings.test.json").Build();
+        _omdb = new OmdbService(config["OMDB:ApiKey"]);
     }
 
     [Test]
@@ -29,6 +26,6 @@ public class ImdbParserTests
 
     [Test]
     public void NotFoundReturnsNull() {
-        Assert.That(async () => await _omdb.GetMovieInfo("tt9999999"), Throws.Exception);
+        Assert.ThrowsAsync<KeyNotFoundException>(() => _omdb.GetMovieInfo("tt9999999"));
     }
 }

@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieNight", "MovieNight\MovieNight.csproj", "{933E7C17-6BEC-4D5A-A8EA-800C81C87E71}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoveNightTests", "MoveNightTests\MoveNightTests.csproj", "{A044F2FF-45C4-4ABA-A389-62754F5DE82E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{933E7C17-6BEC-4D5A-A8EA-800C81C87E71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{933E7C17-6BEC-4D5A-A8EA-800C81C87E71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{933E7C17-6BEC-4D5A-A8EA-800C81C87E71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{933E7C17-6BEC-4D5A-A8EA-800C81C87E71}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A044F2FF-45C4-4ABA-A389-62754F5DE82E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A044F2FF-45C4-4ABA-A389-62754F5DE82E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A044F2FF-45C4-4ABA-A389-62754F5DE82E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A044F2FF-45C4-4ABA-A389-62754F5DE82E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

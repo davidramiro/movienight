@@ -2,7 +2,7 @@
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using MovieNight.Data
 @using System.Globalization
-@inject SignInManager<ApplicationUser> SignInManager
+@inject SignInManager<MovieUser> SignInManager
 @model MovieNight.Models.ViewModels.MovieOverviewVM
 
 @{
@@ -22,76 +22,84 @@
     
     @if (!Model.LastEmpty)
     {
-        <div class="row mt-4">
-            <h3>@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName((DateTime.Today.Month))'s Winner</h3>
-            <div class="movie_card text-start" id="bright">
-                <div class="info_section">
-                    <div class="movie_header">
-                        <img class="locandina" src="@Url.Content(@Model.LastSuggestion.Movie.PosterUrl)" alt="@Model.LastSuggestion.Movie.Title Poster"/>
-                        <h3>@Model.LastSuggestion.Movie.Title</h3>
-                        <h4>@Model.CurrentSuggestion.Movie.ReleaseYear
-                            <span class="rating">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-heart" viewBox="0 0 16 16">
-                                  <path d="M9 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-9 8c0 1 1 1 1 1h10s1 0 1-1-1-4-6-4-6 3-6 4Zm13.5-8.09c1.387-1.425 4.855 1.07 0 4.277-4.854-3.207-1.387-5.702 0-4.276Z"/>
-                                </svg>
-                                @Model.LastVotes
-                            </span>
-                        </h4>
-                        <span class="minutes">@Model.LastSuggestion.Movie.Runtime</span>
-                        <p class="type">@Model.LastSuggestion.Movie.Genre</p>
+        <h3 class="mt-5 mb-3">@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName((DateTime.Today.Month))'s Winners</h3>
+        @foreach (var item in Model.LastMovies)
+        {
+            <div class="row mt-1">
+                <div class="movie_card text-start" id="bright">
+                    <div class="info_section">
+                        <div class="movie_header">
+                            <img class="locandina" src="@Url.Content(@item.Key.Movie.PosterUrl)" alt="@item.Key.Movie.Title Poster"/>
+                            <h3>@item.Key.Movie.Title</h3>
+                            <h4>@item.Key.Movie.ReleaseYear
+                                <span class="rating">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-heart" viewBox="0 0 16 16">
+                                      <path d="M9 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-9 8c0 1 1 1 1 1h10s1 0 1-1-1-4-6-4-6 3-6 4Zm13.5-8.09c1.387-1.425 4.855 1.07 0 4.277-4.854-3.207-1.387-5.702 0-4.276Z"/>
+                                    </svg>
+                                    @item.Value.Count
+                                </span>
+                            </h4>
+                            <span class="minutes">@item.Key.Movie.Runtime</span>
+                            <p class="type">@item.Key.Movie.Genre</p>
+                        </div>
+                        <div class="movie_desc">
+                            <p class="text">
+                                @item.Key.Movie.Plot
+                            </p>
+                            <p><em>Suggested by: @item.Key.User?.firstName</em></p>
+                        </div>
+                        <div class="movie_social">
+                            <ul>
+                                <li>IMDb: @item.Key.Movie.ImdbRating/10 | MetaCritic: @item.Key.Movie.MetaScore/100</li>
+                            </ul>
+                        </div>
                     </div>
-                    <div class="movie_desc">
-                        <p class="text">
-                            @Model.LastSuggestion.Movie.Plot
-                        </p>
-                        <p><em>Suggested by: @Model.LastSuggestion.User?.firstName</em></p>
-                    </div>
-                    <div class="movie_social">
-                        <ul>
-                            <li>IMDb: @Model.LastSuggestion.Movie.ImdbRating/10 | MetaCritic: @Model.LastSuggestion.Movie.MetaScore/100</li>
-                        </ul>
-                    </div>
+                    <div class="blur_back bright_back" style="background: url('@Url.Content(@item.Key.Movie.PosterUrl)');background-size: 100%;background-position: center !important;"></div>
                 </div>
-                <div class="blur_back bright_back" style="background: url('@Url.Content(@Model.LastSuggestion.Movie.PosterUrl)');background-size: 100%;background-position: center !important;"></div>
             </div>
-        </div>
+        }
+        
     }
 
     @if (!Model.CurrentEmpty)
-    {
-        <div class="row mt-4">
-            <h3>@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName((DateTime.Today.Month + 1))'s Front Runner</h3>
-            <div class="movie_card text-start" id="bright">
-                <div class="info_section">
-                    <div class="movie_header">
-                        <img class="locandina" src="@Url.Content(@Model.CurrentSuggestion.Movie.PosterUrl)" alt="@Model.CurrentSuggestion.Movie.Title Poster"/>
-                        <h3>@Model.CurrentSuggestion.Movie.Title</h3>
-                        <h4>@Model.CurrentSuggestion.Movie.ReleaseYear
-                            <span class="rating">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-heart" viewBox="0 0 16 16">
-                                  <path d="M9 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-9 8c0 1 1 1 1 1h10s1 0 1-1-1-4-6-4-6 3-6 4Zm13.5-8.09c1.387-1.425 4.855 1.07 0 4.277-4.854-3.207-1.387-5.702 0-4.276Z"/>
-                                </svg>
-                                @Model.CurrentVotes
-                            </span>
-                            </h4>
-                        <span class="minutes">@Model.CurrentSuggestion.Movie.Runtime</span>
-                        <p class="type">@Model.CurrentSuggestion.Movie.Genre</p>
-                    </div>
-                    <div class="movie_desc">
-                        <p class="text">
-                            @Model.CurrentSuggestion.Movie.Plot
-                        </p>
-                        <p><em>Suggested by: @Model.CurrentSuggestion.User?.firstName</em></p>
-                    </div>
-                    <div class="movie_social">
-                        <ul>
-                            <li>IMDb: @Model.CurrentSuggestion.Movie.ImdbRating/10 | MetaCritic: @Model.CurrentSuggestion.Movie.MetaScore/100</li>
-                        </ul>
+        {
+            <h3 class="mt-5 mb-3">@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName((DateTime.Today.Month + 1))'s Front Runners</h3>
+            @foreach (var item in Model.CurrentMovies)
+            {
+                <div class="row mt-1">
+                    <div class="movie_card text-start" id="bright">
+                        <div class="info_section">
+                            <div class="movie_header">
+                                <img class="locandina" src="@Url.Content(@item.Key.Movie.PosterUrl)" alt="@item.Key.Movie.Title Poster"/>
+                                <h3>@item.Key.Movie.Title</h3>
+                                <h4>@item.Key.Movie.ReleaseYear
+                                    <span class="rating">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-heart" viewBox="0 0 16 16">
+                                          <path d="M9 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-9 8c0 1 1 1 1 1h10s1 0 1-1-1-4-6-4-6 3-6 4Zm13.5-8.09c1.387-1.425 4.855 1.07 0 4.277-4.854-3.207-1.387-5.702 0-4.276Z"/>
+                                        </svg>
+                                        @item.Value.Count
+                                    </span>
+                                </h4>
+                                <span class="minutes">@item.Key.Movie.Runtime</span>
+                                <p class="type">@item.Key.Movie.Genre</p>
+                            </div>
+                            <div class="movie_desc">
+                                <p class="text">
+                                    @item.Key.Movie.Plot
+                                </p>
+                                <p><em>Suggested by: @item.Key.User?.firstName</em></p>
+                            </div>
+                            <div class="movie_social">
+                                <ul>
+                                    <li>IMDb: @item.Key.Movie.ImdbRating/10 | MetaCritic: @item.Key.Movie.MetaScore/100</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="blur_back bright_back" style="background: url('@Url.Content(@item.Key.Movie.PosterUrl)');background-size: 100%;background-position: center !important;"></div>
                     </div>
                 </div>
-                <div class="blur_back bright_back" style="background: url('@Url.Content(@Model.CurrentSuggestion.Movie.PosterUrl)');background-size: 100%;background-position: center !important;"></div>
-            </div>
-        </div>
-    }
+            }
+            
+        }
 </div>
 

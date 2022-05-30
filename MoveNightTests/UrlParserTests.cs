@@ -1,9 +1,8 @@
 using Microsoft.Extensions.Configuration;
-using MovieNight.Models;
 using NUnit.Framework;
 using MovieNight.Services;
 
-namespace Tests;
+namespace MoveNightTests;
 
 public class UrlParserTests
 {
@@ -11,14 +10,10 @@ public class UrlParserTests
 
     public UrlParserTests()
     {
-        _omdb = new OmdbService("YOUR-API-KEY");
+        var config = new ConfigurationBuilder().AddJsonFile("appsettings.test.json").Build();
+        _omdb = new OmdbService(config["OMDB:ApiKey"]);
     }
     
-    [SetUp]
-    public void Setup()
-    {
-    }
-
     [Test]
     public void UrlConvertsCorrectly() {
         Assert.AreEqual("tt4877122",

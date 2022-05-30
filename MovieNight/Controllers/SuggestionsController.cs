@@ -12,9 +12,9 @@ namespace MovieNight.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly OmdbService _omdb;
-        private readonly UserManager<ApplicationUser> _user;
+        private readonly UserManager<MovieUser> _user;
 
-        public SuggestionsController(ApplicationDbContext context, UserManager<ApplicationUser> user, IConfiguration configuration)
+        public SuggestionsController(ApplicationDbContext context, UserManager<MovieUser> user, IConfiguration configuration)
         {
             _context = context;
             _user = user;

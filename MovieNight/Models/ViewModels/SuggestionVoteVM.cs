@@ -2,6 +2,6 @@ namespace MovieNight.Models.ViewModels;
 
 public class SuggestionVoteVM
 {
-    public Dictionary<Suggestion, List<Vote>> suggestionvote { get; set; }
-    public int castVotes { get; set; }
+    public Dictionary<Suggestion, List<Vote>>? SuggestionWithVotes { get; set; }
+    public int CastVotes { get; set; }
 }
