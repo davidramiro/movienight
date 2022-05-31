@@ -13,22 +13,31 @@ namespace MovieNight.Controllers
         private readonly ApplicationDbContext _context;
         private readonly OmdbService _omdb;
         private readonly UserManager<MovieUser> _user;
+        private readonly ILogger<SuggestionsController> _logger;
 
-        public SuggestionsController(ApplicationDbContext context, UserManager<MovieUser> user, IConfiguration configuration)
+        public SuggestionsController(ApplicationDbContext context, UserManager<MovieUser> user, IConfiguration configuration, ILogger<SuggestionsController> logger)
         {
             _context = context;
             _user = user;
             _omdb = new OmdbService(configuration);
+            _logger = logger;
         }
 
         // GET: Suggestions/Create
         [Authorize]
         public async Task<IActionResult> Index()
         {
-            ViewBag.Error = null;
+            ViewData.Clear();
             var user = await _user.GetUserAsync(HttpContext.User);
-            ViewBag.SuggestionsMade = await _context.Suggestion.CountAsync(s => s.User.Id == user.Id
-                && s.Date.Month == DateTime.Today.Month);
+            
+            if (_context.Suggestion == null)
+            {
+                ViewBag.Error = "Error fetching Suggestions.";
+                return View();
+            }
+            
+            ViewBag.SuggestionsMade = await _context.Suggestion
+                .CountAsync(s => s.User != null && s.User.Id == user.Id && s.Date.Month == DateTime.Today.Month);
             return View();
         }
 
@@ -43,9 +52,17 @@ namespace MovieNight.Controllers
             if (ModelState.IsValid)
             {
                 var user = await _user.GetUserAsync(HttpContext.User);
+                
+                if (_context.Suggestion == null)
+                {
+                    ViewBag.Error = "Error fetching Suggestions.";
+                    ViewBag.SuggestionsMade = "N/A";
+                    return View(imdbInput);
+                }
 
-                int suggestionsMade = await _context.Suggestion.CountAsync(s => s.User.Id == user.Id
-                    && s.Date.Month == DateTime.Today.Month);
+                int suggestionsMade = await _context.Suggestion
+                    .CountAsync(s => s.User != null && s.User.Id == user.Id
+                        && s.Date.Month == DateTime.Today.Month);
                 
                 if (suggestionsMade > 2)
                 {
@@ -54,7 +71,7 @@ namespace MovieNight.Controllers
                     return View(imdbInput);
                 }
 
-                Movie movie = null;
+                Movie movie;
                 
                 try
                 {
@@ -63,11 +80,12 @@ namespace MovieNight.Controllers
                 catch (Exception ex)
                 {
                     ViewBag.Error = "Error fetching movie info.";
+                    _logger.LogError("Fetching failed: {}", ex.Message);
                     ViewBag.SuggestionsMade = suggestionsMade;
                     return View(imdbInput);
                 }
                 
-                bool alreadySuggested = await _context.Suggestion.AnyAsync(s => s.Movie.ImdbId == movie.ImdbId
+                bool alreadySuggested = await _context.Suggestion.AnyAsync(s => s.Movie != null && s.Movie.ImdbId == movie.ImdbId
                  && s.Date.Month == DateTime.Today.Month);
 
                 if (alreadySuggested)
@@ -97,7 +115,13 @@ namespace MovieNight.Controllers
             
             if ((_context.Movie?.Any(e => e.ImdbId == queryId)).GetValueOrDefault())
             {
-                return _context.Movie?
+                if (_context.Movie == null)
+                {
+                    ViewBag.Error = "Error fetching Suggestions.";
+                    throw new KeyNotFoundException();
+                }
+                
+                return _context.Movie
                     .First(m => m.ImdbId == queryId);
             }
             else

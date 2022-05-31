@@ -7,16 +7,22 @@
 }
 
 <h1>Suggestions for @CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName((DateTime.Today.Month + 1))</h1>
-<h3 class="mb-5 mt-2">You have cast @Model.CastVotes of 3 votes.</h3>
+<h3 class="mb-5 mt-2">You have cast @Model.OwnVotes.Count of 3 votes.</h3>
 @if (ViewBag.Error != null)
 {
     <div class="alert alert-danger" role="alert">
         @ViewBag.Error
     </div>
 }
+@if (ViewBag.Success != null)
+{
+    <div class="alert alert-success" role="alert">
+        @ViewBag.Success
+    </div>
+}
+
 
 <div class="row">
-  
     @foreach (var item in Model.SuggestionWithVotes)
     {
         <div class="col-lg-3 col-md-6 col-sm-12 d-flex align-items-stretch mt-1 mb-5">
@@ -40,13 +46,26 @@
                     </p>
                     
                     <div class="d-flex justify-content-between">
-                        <a class="btn btn-primary" asp-controller="Voting" asp-action="Vote" asp-route-itemid="@item.Key.Id">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
-                            </svg>
-                            &nbsp;Vote
-                        </a>
-    
+                        @if (item.Value.Contains(Model.OwnVotes.FirstOrDefault(s => s.Suggestion == item.Key)))
+                        {
+                            <a class="btn btn-danger" asp-controller="Voting" asp-action="RemoveVote" asp-route-voteid="@Model.OwnVotes.First(s => s.Suggestion == item.Key).Id">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                  <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+                                </svg>
+                                &nbsp;Undo
+                            </a>
+                        }
+                        else
+                        {
+                            <a class="btn btn-primary" asp-controller="Voting" asp-action="Vote" asp-route-itemid="@item.Key.Id">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                                </svg>
+                                &nbsp;Vote
+                            </a>
+                        }
+                        
+
                         <span class="voteborder" rel="tooltip" data-toggle="tooltip" data-bs-placement="top" title="@String.Join(", ", item.Value.Select(x => x.User.firstName))">
                             @item.Value.Count
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-heart" viewBox="0 0 16 16">
