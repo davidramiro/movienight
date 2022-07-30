@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using MovieNight.Models;
 
@@ -24,4 +24,7 @@ public class ApplicationDbContext : IdentityDbContext<MovieUser>
     public DbSet<Movie>? Movie { get; set; }
     public DbSet<Vote>? Vote { get; set; }
     public DbSet<Suggestion>? Suggestion { get; set; }
+    public DbSet<MovieBracket>? MovieBracket { get; set; }
+    public DbSet<MoviePair>? MoviePair { get; set; }
+    public DbSet<MovieNight.Models.Tournament>? Tournament { get; set; }
 }

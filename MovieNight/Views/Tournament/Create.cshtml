@@ -1,0 +1,53 @@
+@model MovieNight.Models.Tournament
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Tournament</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Running" /> @Html.DisplayNameFor(model => model.Running)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Finished" /> @Html.DisplayNameFor(model => model.Finished)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="CurrentRound" class="control-label"></label>
+                <input asp-for="CurrentRound" class="form-control" />
+                <span asp-validation-for="CurrentRound" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HighestBracket" class="control-label"></label>
+                <input asp-for="HighestBracket" class="form-control" />
+                <span asp-validation-for="HighestBracket" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Date" class="control-label"></label>
+                <input asp-for="Date" class="form-control" />
+                <span asp-validation-for="Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
