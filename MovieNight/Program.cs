@@ -81,7 +81,7 @@ app.UseHangfireDashboard();
 var provider = builder.Services.BuildServiceProvider();
 
 
-RecurringJob.AddOrUpdate(() => provider.GetService<IUserNotifier>().NotifyUsers(), "*/20 * * * * *");
+RecurringJob.AddOrUpdate(() => provider.GetService<IUserNotifier>().NotifyUsers(), "0 0 1 * *");
 
 app.MapControllerRoute(
     name: "default",
