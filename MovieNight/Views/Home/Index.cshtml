@@ -10,7 +10,7 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Moin!</h1>
+    <h1 class="display-4">Welcome to MovieNight!</h1>
     @if (SignInManager.IsSignedIn(User))
     {
         <a class="btn btn-primary" asp-action="Index" asp-controller="Voting">Start Voting</a>
@@ -22,7 +22,7 @@
     
     @if (!Model.LastEmpty)
     {
-        <h3 class="mt-5 mb-3">@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName((DateTime.Today.Month))'s Winners</h3>
+        <h3 class="mt-5 mb-3">@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName((DateTime.Today.Month))'s Winner</h3>
         @foreach (var item in Model.LastMovies)
         {
             <div class="row mt-1">

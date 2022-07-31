@@ -70,6 +70,11 @@ namespace MovieNight.Controllers
                 
                 vm.SuggestionWithVotes.Add(sug, votes);
             }
+            
+            var ordered = vm.SuggestionWithVotes
+                .OrderByDescending(x => x.Value.Count)
+                .ToDictionary(x => x.Key, x => x.Value);
+            vm.SuggestionWithVotes = ordered;
             return View(vm);
         }
         

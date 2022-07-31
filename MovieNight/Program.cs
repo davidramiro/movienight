@@ -1,7 +1,10 @@
+using Hangfire;
+using Hangfire.SQLite;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
+using MovieNight.Controllers;
 using MovieNight.Data;
 using MovieNight.Services;
 
@@ -18,8 +21,19 @@ builder.Services.AddDefaultIdentity<MovieUser>(options => options.SignIn.Require
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddClaimsPrincipalFactory<AdditionalUserClaimsPrincipalFactory>();
 
-builder.Services.AddTransient<IEmailSender, EmailSender>();
+builder.Services.AddScoped<IEmailSender, EmailSender>();
+builder.Services.AddScoped<IUserNotifier, UserNotifier>();
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddHangfire(configuration =>
+{
+    configuration
+        .UseSQLiteStorage(builder.Configuration.GetConnectionString("Hangfire"))
+        .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+        .UseSimpleAssemblyNameTypeSerializer()
+        .UseRecommendedSerializerSettings();    
+});
+builder.Services.AddHangfireServer();
 
 builder.Services.Configure<ForwardedHeadersOptions>(options =>
 {
@@ -61,6 +75,13 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseHangfireDashboard();
+
+var provider = builder.Services.BuildServiceProvider();
+
+
+RecurringJob.AddOrUpdate(() => provider.GetService<IUserNotifier>().NotifyUsers(), "*/20 * * * * *");
 
 app.MapControllerRoute(
     name: "default",
